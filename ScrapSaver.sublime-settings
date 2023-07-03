@@ -1,0 +1,23 @@
+{
+	// Optional: A single directory under which all project scrap-file-mirror folders are gathered.
+	// The sub-folders of the "allScrapsParentDir" will be named as per project root folders.
+	"allScrapsParentDir": "",
+
+	// Optional: If "allScrapsParentDir" is an empty string then each project's scrap-file-mirror will be created
+	// with the absolute path "scrapFolderName". This setting should only be used on a per
+	// project basis (in the project settings file).
+	// If neither "allScrapsParentDir" or "scrapFolderName" are set (i.e. both are empty strings), 
+	// then Scrap Saver creates project-scrap-file-mirrors in the parent folder of each sublime project directory.
+	// The name given to these localised scrap-file-mirrors is the project name + underscore + "scrapSuffix".
+	// For example: ..myproject will get a scrap-file-mirror root of ../myproject_scrap (with the default "scrapSuffix").
+	"scrapFolderName": "",
+
+	// The "scrapSuffix" is appended to all generated scrap files as an extension.
+	// e.g. ../myfile.py will have a corresponding scrap file, in the scrap-tree-mirror, of ../myfile.py.scrap
+	"scrapSuffix": "scrap",
+
+	// When editing a project file you can open up the corresponding scrap-file in either a) a view to the side,
+	// b) a view below, c) a new tab. These correspond to the three possible settings of "scrapCompareWindowSplit",
+	// a) "vertical", b) "horizontal", c) "".
+	"scrapCompareWindowSplit": "vertical"
+}

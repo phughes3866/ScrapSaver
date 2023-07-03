@@ -1,0 +1,20 @@
+[
+	{
+		"id" : "ScrapSaverCtxMenu",
+		"caption": "Scrap Saver",
+        "mnemonic": "S",
+		"children":
+		[
+			{
+				"caption": "Scrap selected text (cut to scrap dir)",
+				"command" : "scrap_saver", "args": {},
+				"mnemonic" : "S"
+			},
+			{
+				"caption": "View your scrap (open corresponding scrap file)",
+				"command" : "scrap_compare", "args": {},
+				"mnemonic" : "V",
+			}
+		]
+	}
+]

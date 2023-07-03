@@ -1,0 +1,45 @@
+[
+    {
+        "caption": "Sphinx Swift: Insert Date and Time",
+		"command" : "insert_datetime", "args": {}
+    },
+    {
+        "caption": "Sphinx Swift: Open html (if built)",
+		"command" : "open_html_page", "args": {}
+    },
+    {
+        "caption": "Scrap Saver: Scrap selected text (cut to scrap dir)",
+		"command" : "scrap_saver", "args": {}
+    },
+    {
+        "caption": "Scrap Saver: View your scrap (open corresponding scrap file)",
+		"command" : "scrap_compare", "args": {}
+    },
+    
+    {
+        "caption": "ScrapSaver: Readme/Information (opens README.rst file)",
+        "command": "open_file",
+        "args":
+        {
+          "file": "${packages}/SphinxRefmate/README.rst",
+        }
+    },
+    {
+        "caption": "Preferences: ScrapSaver Settings",
+        "command": "edit_settings",
+        "args":
+        {
+          "base_file": "${packages}/ScrapSaver/ScrapSaver.sublime-settings",
+          "default": "// Scrap Saver User Settings (these settings override those in .../ScrapSaver/ScrapSaver.sublime-settings)\n{\n\t$0\n}\n"
+        }
+    }
+    // {
+    //     "caption": "Preferences: Scrap Saver Key Bindings",
+    //     "command": "edit_settings", "args":
+	// 	{
+	// 	  "base_file": "${packages}/ScrapSaver/Example.sublime-keymap",
+	// 	  "default": "\n[\n\t// Default User Keymap File (add key bindings below)\n\t$0\n]\n",
+	// 	  "user_file": "${packages}/User/Default ($platform).sublime-keymap"
+	// 	}
+    // }
+]

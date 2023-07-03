@@ -1,0 +1,60 @@
+[
+	    {
+        "id": "tools",
+        "children":
+        [
+	{
+		"id" : "ScrapSaverToolsMenu",
+		"caption": "Scrap Saver Tools",
+		"children":
+		[
+		{
+			"caption" : "Scrap selected text (cut to scrap dir)",
+			"command" : "scrap_saver",
+			"mnemonic" : "S"
+		},
+		{
+			"caption" : "View your scrap (open corresponding scrap file)",
+			"command" : "scrap_compare",
+			"mnemonic" : "V"
+		},
+		]
+	}
+        ]
+    },
+    {
+        "id": "preferences",
+        "children":
+        [
+            {
+                "id": "package-settings",
+                "children":
+                [
+                    {
+                        "id": "scrapsaver",
+                        "caption": "Scrap Saver",
+                        "children":
+                        [
+                        	{
+                        	      "caption": "Settings",
+                        	      "command": "edit_settings", "args":
+                        	      {
+                        	          "base_file": "${packages}/ScrapSaver/ScrapSaver.sublime-settings",
+                        	          "default": "// ScrapSaver Settings - User\n{\n\t$0\n}\n"
+                        	      }
+                        	  },
+                        	{
+                        	      "caption": "Key Bindings",
+                        	      "command": "edit_settings", "args":
+                        	      {
+                        	          "base_file": "${packages}/ScrapSaver/keymaps/Default ($platform).sublime-keymap",
+                        	          "default": "${packages}/User/Default ($platform).sublime-keymap"
+                        	      }
+                        	  }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
