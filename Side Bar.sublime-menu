@@ -1,0 +1,22 @@
+[
+
+	{
+		"id" : "ScrapSaverSideBarMenu",
+		"caption": "Scrap Saver Tools",
+		"children":
+		[
+		{
+			"caption" : "Scrap path (move to scrap dir)",
+			"command" : "scrap_whole_path",
+			"args": {"paths": []},
+			"mnemonic" : "S"
+		},
+		{
+			"caption" : "Open Scrap Tree in New Sublime Window",
+			"command" : "open_scrap_project",
+			"mnemonic" : "W"
+		},
+
+        ]
+    },
+  ]

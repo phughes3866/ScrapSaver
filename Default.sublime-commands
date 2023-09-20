@@ -1,13 +1,5 @@
 [
     {
-        "caption": "Sphinx Swift: Insert Date and Time",
-		"command" : "insert_datetime", "args": {}
-    },
-    {
-        "caption": "Sphinx Swift: Open html (if built)",
-		"command" : "open_html_page", "args": {}
-    },
-    {
         "caption": "Scrap Saver: Scrap selected text (cut to scrap dir)",
 		"command" : "scrap_saver", "args": {}
     },

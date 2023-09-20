@@ -1,6 +1,9 @@
 import sys
 import sublime
 import sublime_plugin
+import subprocess
+from datetime import datetime
+from pathlib import Path
 from .utils import admin
 from datetime import datetime
 from .utils.constants import pluginName
@@ -92,6 +95,75 @@ class ScrapSaverCommand(sublime_plugin.TextCommand, MessageOutputUtils):
         else:
             self.status_message('No text selected for scrapping. Nothing done.')
 
+
+class ClickDecode():
+    def get_path(self, paths):
+        view = self.window.active_view()
+
+        if paths:
+            # a path has been passed to the command (ie. we've been called from the sidebar)
+            return paths[0]
+
+        if view and view.file_name():
+            # check that the file actually exists on disk
+            return view.file_name()
+
+def subl(*args):
+    # print(args)
+    executable_path = sublime.executable_path()
+    if sublime.platform() == 'osx':
+        app_path = executable_path[:executable_path.rfind('.app/') + 5]
+        executable_path = app_path + 'Contents/SharedSupport/bin/subl'
+
+    subprocess.Popen([executable_path] + list(args))
+
+class ScrapWholePathCommand(sublime_plugin.WindowCommand, MessageOutputUtils, ClickDecode):
+    """
+    Cuts selected text from the file and pastes it to an identically named file (plus a '.scrap' suffix),
+    `- which is located in a directory tree parallel to (mirroring) the project directory .
+    """
+    def run(self, paths=[]):
+        path = self.get_path(paths)
+        # self.msgBox(f'path to scrap = {path}')
+        if path is not None:
+            srcPathObj = Path(path)
+            print(f'source path = {str(srcPathObj)}')
+            windowVariables = self.window.extract_variables()
+            scrapTreeRoot, dotlessSuffix = admin.getScrappitVars(windowVariables, self.name())
+            if scrapTreeRoot is None:
+                return
+            if not admin.checkAndCreateScrapRootDir(scrapTreeRoot, self.name()):
+                return
+            projectTLD = windowVariables.get('folder')
+            if projectTLD is None:
+                self.status_message('Error: Cannot determine sublime text\'s top level folder.')
+                return
+            projectPath = Path(projectTLD)
+            if srcPathObj.samefile(projectPath):
+                self.status_message('Cannot scrap the whole project. Only parts thereof.')
+                return
+            fileRelativePath = srcPathObj.relative_to(projectTLD)
+            destPathMirrorObj = scrapTreeRoot.joinpath(fileRelativePath)
+            dateSuffix = "_ALL" + datetime.now().strftime("%Y%m%d_%H%M%S")
+            destPathScrapNamedObj = destPathMirrorObj.with_name(destPathMirrorObj.name + dateSuffix)
+            print(f'dest path = {str(destPathScrapNamedObj)}')
+            try:
+                destPathScrapNamedObj.parents[0].mkdir(parents=True, exist_ok=True)
+                srcPathObj.rename(destPathScrapNamedObj)
+            except Exception as e_details:
+                self.msgBox(f'Error moving {str(srcPathObj)} to: {str(destPathScrapNamedObj)}\n\n{str(e_details)}')
+
+class OpenScrapProjectCommand(sublime_plugin.WindowCommand, MessageOutputUtils):
+    """
+    Opens a new sublime text instance focusing on the current project's scrap folder
+    """
+    def run(self):
+        windowVariables = self.window.extract_variables()
+        scrapTreeRoot, dotlessSuffix = admin.getScrappitVars(windowVariables, self.name())
+        if scrapTreeRoot is None:
+            return
+        # print(f'want to open at {scrapTreeRoot}')
+        subl('-n', str(scrapTreeRoot.resolve()))
 
 class ScrapCompareCommand(sublime_plugin.WindowCommand, MessageOutputUtils):
     """

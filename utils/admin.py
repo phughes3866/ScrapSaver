@@ -96,8 +96,10 @@ def checkAndCreateScrapRootDir(thisScrapRoot, callerName, create=True):
                     # directory already exists
                     msgBox(f"Unable to create folder: {thisScrapRoot}\n\nError: {str(e)}")
                     return False
+                else:
+                    return True
             else:
-                return True
+                return False
     elif thisScrapRoot.is_dir():
         if not os.access(str(thisScrapRoot), os.W_OK):
             msgBox(f"Error: Dir {str(thisScrapRoot)} is not writeable.", callerName)
