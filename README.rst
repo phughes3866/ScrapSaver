@@ -2,7 +2,7 @@ Ongoing SphinxSwift Work: Call Back Later
 =========================================
 
 ``sublime-rst-completion`` is a group of snippets and commands to facilitate writing restructuredText
-with SublimeText.
+.
 
 Demo
 ----

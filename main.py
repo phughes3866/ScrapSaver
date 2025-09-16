@@ -66,14 +66,19 @@ class ScrapSaverCommand(sublime_plugin.TextCommand, MessageOutputUtils):
         # Get selection(s)
         sel = self.view.sel()
         selblock = ''
-        datestr = f'{self.name()}: {datetime.now().strftime("%d/%m/%Y")}'
+        datestr = f'The text below was cut on {datetime.now().strftime("%d/%m/%Y")}'
+        # datestr = f'{self.name()}: {datetime.now().strftime("%d/%m/%Y")}'
         # print(f'dir = {dir(self)}')
         # print(f'repr = {self.__repr__}')
         # print(f'name = {self.name()}')
         for s in sel:       
             if not s.empty():
-                selblock += f'#{"-"*60}\n#{datestr}\n#{"-"*len(datestr)}\n{self.view.substr(s)}\n'
+                # build 'selblock' with selected text wrapped in meaningful context info and delimeters
+                # allows for multiple selections
+                # selblock += f'#{"-"*60}\n#{datestr}\n#{"-"*len(datestr)}\n{self.view.substr(s)}\n'
+                selblock += f'#-----{datestr}-----\n{self.view.substr(s)}\n'
         if selblock:
+            # something was selected for 'scrapping' so process it
             windowVariables = self.view.window().extract_variables()
             scrapTreeRoot, dotlessSuffix = admin.getScrappitVars(windowVariables, self.name())
             if scrapTreeRoot is None:
@@ -88,10 +93,10 @@ class ScrapSaverCommand(sublime_plugin.TextCommand, MessageOutputUtils):
                     with scrapWriteFile.open('a') as f:
                         f.write(f'{selblock}')
                 except Exception as e:
-                    self.msgBox(f'Error writing file: {str(scrapWriteFile)}\n\n{str(e)}\n\nNo text has been cut.')
+                    self.msgBox(f'Error writing scrap to file: {str(scrapWriteFile)}\n\n{str(e)}\n\nAccordingly no text has been cut.')
                 else:
                     self.view.replace(edit, s, '')
-                    self.status_message(f'Scrap sent text to: {str(scrapWriteFile)}')
+                    self.status_message(f'Selected scrap cut + sent text to: {str(scrapWriteFile)}')
         else:
             self.status_message('No text selected for scrapping. Nothing done.')
 
